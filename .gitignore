@@ -1,0 +1,9 @@
+/example_data
+/output
+*__pycache__
+*.ipynb_checkpoints
+*.ipynb.orig
+*.idea
+
+
+
