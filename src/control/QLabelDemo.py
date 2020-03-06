@@ -44,7 +44,8 @@ class QLabelDemo(QWidget):
         label3.setAlignment(Qt.AlignCenter)
         label3.setToolTip('这是一个图片标签')
         label3.setPixmap(QPixmap("./image/1203057.png"))
-
+        #如果设为True，则用浏览器打开，如果设为False,则调用点击事件槽
+        label4.setOpenExternalLinks(True)
         label4.setText("<a href='https://item.jd.com/12317263.html'>感谢关注《Python》</a>")
         label4.setAlignment(Qt.AlignCenter)
         label4.setToolTip('这是一个超级链接')
