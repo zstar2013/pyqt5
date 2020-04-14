@@ -43,14 +43,24 @@ class DrawAll(QWidget):
 
         #椭圆
         qp.drawEllipse(120,120,150,100)
-        qp.end()
+
 
         #绘制多边形
         point1=QPoint(140,380)
-        point2=QPoint(140,380)
-        point3=QPoint(140,380)
-        point4=QPoint(140,380)
-        point5=QPoint(140,380)
+        point2=QPoint(270,420)
+        point3=QPoint(290,512)
+        point4=QPoint(290,588)
+        point5=QPoint(200,533)
+
+        polygon=QPolygon([point1,point2,point3,point4,point5])
+        qp.drawPolygon(polygon)
+
+        #绘制图像
+        image=QImage('./image/1203057.png')
+        rect=QRect(10,400,image.width()/3,image.height()/3)
+        qp.drawImage(rect,image)
+
+        qp.end()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
