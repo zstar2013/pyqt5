@@ -1,10 +1,8 @@
 '''
 
-拓展的列表控件（TableWidget）
+在单元格中放置控件
 
-QTableView
-
-每一个cell(单元格)是一个TableWidgetItem
+setCellWidget
 '''
 
 import sys,math
@@ -19,40 +17,35 @@ class PlaceControlInCell(QWidget):
         self.initUI()
 
     def initUI(self):
+        self.resize(430, 230)
+        self.setWindowTitle("PlaceControlInCell例子")
+
         layout=QHBoxLayout()
-        tablewidget=QTableWidget()
-        tablewidget.setRowCount(4)
-        tablewidget.setColumnCount(3)
+        tableWidget=QTableWidget()
+        tableWidget.setRowCount(4)
+        tableWidget.setColumnCount(3)
 
-        layout.addWidget(tablewidget)
+        layout.addWidget(tableWidget)
 
-        tablewidget.setHorizontalHeaderLabels(['姓名','年龄','籍贯'])
-        nameItem=QTableWidgetItem('小明')
-        tablewidget.setItem(0,0,nameItem)
-        ageItem = QTableWidgetItem('24')
-        tablewidget.setItem(0, 1, ageItem)
-        jgItem=QTableWidgetItem('北京')
-        tablewidget.setItem(0,2,jgItem)
+        tableWidget.setHorizontalHeaderLabels(['姓名','性别','体重（kg）'])
+        textItem=QTableWidgetItem('小明')
+        tableWidget.setItem(0,0,textItem)
 
-        #禁止编辑
-        tablewidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        combox=QComboBox()
+        combox.addItem('男')
+        combox.addItem('女')
 
-        #整行选择
-        tablewidget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        #QSS
 
-        #调整行和列
-        tablewidget.resizeColumnsToContents()
-        tablewidget.resizeRowToContents()
+        combox.setStyleSheet('QComboBox{margin:3px}')
+        tableWidget.setCellWidget(0,1,combox)
 
-        #tablewidget.horizontalHeader().setVisible(False)
-        #tablewidget.verticalHeader().setVisible(False)
-
-        tablewidget.setVerticalHeaderLabels(["a","b"])
+        modifyButton=QPushButton('修改')
+        modifyButton.setDown(True)
+        modifyButton.setStyleSheet('QPushButton{margin:3px}')
+        tableWidget.setCellWidget(0,2,modifyButton)
 
         self.setLayout(layout)
-
-        self.resize(430, 230)
-        self.setWindowTitle("TableWidgetDemo例子")
 
 
 if __name__ == '__main__':
