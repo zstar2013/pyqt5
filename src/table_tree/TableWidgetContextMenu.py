@@ -18,7 +18,7 @@ class TableWidgetContextMenu(QWidget):
 
     def initUI(self):
         self.resize(500, 300)
-        self.setWindowTitle("PlaceControlInCell例子")
+        self.setWindowTitle("在表格中显示上下文菜单")
 
         layout=QHBoxLayout()
         self.tableWidget = QTableWidget()
@@ -48,20 +48,37 @@ class TableWidgetContextMenu(QWidget):
         newItem = QTableWidgetItem('144')
         self.tableWidget.setItem(2, 2, newItem)
 
-        self.button=QPushButton('sort')
-        self.button.clicked.connect(self.order)
-        layout.addWidget(self.button)
-
-        self.orderType=Qt.DescendingOrder
+        self.tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.tableWidget.customContextMenuRequested.connect(self.generateMenu)
 
         self.setLayout(layout)
 
-    def order(self):
-        if self.orderType==Qt.DescendingOrder:
-            self.orderType=Qt.AscendingOrder
-        else:
-            self.orderType=Qt.DescendingOrder
-        self.tableWidget.sortItems(2,self.orderType)
+    def generateMenu(self,pos):
+        print(pos)
+        for i in self.tableWidget.selectionModel().selection().indexes():
+            rowNum=i.row()
+        #如果选择的行索引小于2，则弹出上下文菜单
+        if rowNum < 2:
+            menu=QMenu()
+            item1=menu.addAction("A")
+            item2=menu.addAction("B")
+            item3=menu.addAction("C")
+            screenPos=self.tableWidget.mapToGlobal(pos)
+            print(screenPos)
+            #被阻塞
+            action=menu.exec(screenPos)
+            if action ==item1:
+                print('选择了第一个菜单项',self.tableWidget.item(rowNum,0).text(),
+                      self.tableWidget.item(rowNum, 1).text(),
+                      self.tableWidget.item(rowNum, 2).text())
+            elif action ==item2:
+                print('选择了第二个菜单项',self.tableWidget.item(rowNum,0).text(),
+                      self.tableWidget.item(rowNum, 1).text(),
+                      self.tableWidget.item(rowNum, 2).text())
+            elif action ==item3:
+                print('选择了第三个菜单项',self.tableWidget.item(rowNum,0).text(),
+                      self.tableWidget.item(rowNum, 1).text(),
+                      self.tableWidget.item(rowNum, 2).text())
 
 
 if __name__ == '__main__':

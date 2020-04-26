@@ -28,7 +28,7 @@ class ToolBarDemo(QMainWindow):
         new =QAction(QIcon('./images/1145502.png'),"new",self)
         tb1.addAction(new)
 
-        open=QAction(QIcon('./images/1145451.png'),"open",self)
+        open=QAction(QIcon('./images/root.png'),"open",self)
         tb1.addAction(open)
 
         save = QAction(QIcon('./images/1145544.png'), "save", self)
