@@ -8,7 +8,6 @@ import sys,math
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QStringListModel
-from qtpy import QtCore
 
 
 class BasicTreeWidget(QMainWindow):
