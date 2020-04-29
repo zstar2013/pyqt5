@@ -13,9 +13,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QStringListModel
 
 
-class MutiWindows(QMainWindow):
+class MultiWindows(QMainWindow):
+    count=0
     def __init__(self):
-        super(MutiWindows, self).__init__()
+        super(MultiWindows, self).__init__()
         self.setWindowTitle('堆栈窗口控件')
         self.initUI()
 
@@ -32,10 +33,10 @@ class MutiWindows(QMainWindow):
 
     def windowaction(self,q):
         if q.text()=='new':
-            MutiWindows.count=MutiWindows.count +1
+            MultiWindows.count=MultiWindows.count +1
             sub=QMdiSubWindow()
             sub.setWidget(QTextEdit())
-            sub.setWindowTitle('子窗口'+str(MutiWindows.count))
+            sub.setWindowTitle('子窗口'+str(MultiWindows.count))
             self.mdi.addSubWindow(sub)
             sub.show()
         elif q.text()=='cascade':
@@ -55,7 +56,7 @@ class MutiWindows(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main = MutiWindows()
+    main = MultiWindows()
     main.show()
 
     sys.exit(app.exec_())
