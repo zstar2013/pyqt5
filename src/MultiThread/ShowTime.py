@@ -39,6 +39,7 @@ class ShowTime(QWidget):
 
         self.startBtn.clicked.connect(self.startTimer)
         self.endBtn.clicked.connect(self.endTimer)
+        self.setLayout(layout)
 
 
 
@@ -46,6 +47,20 @@ class ShowTime(QWidget):
 
     def showTime(self):
         time=QDateTime.currentDateTime()
+
+        timeDisplay=time.toString("yyyy-MM-dd hh:mm:ss dddd")
+
+        self.label.setText(timeDisplay)
+
+    def startTimer(self):
+        self.timer.start(1000)
+        self.startBtn.setEnabled(False)
+        self.endBtn.setEnabled(True)
+
+    def endTimer(self):
+        self.timer.stop()
+        self.startBtn.setEnabled(True)
+        self.endBtn.setEnabled(False)
 
 
 

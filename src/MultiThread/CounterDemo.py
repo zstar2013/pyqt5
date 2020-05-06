@@ -1,0 +1,73 @@
+'''
+
+使用线程类（QThread）编写计数器
+
+QThread
+
+def run(self)
+    while True:
+        self.sleep(1)
+        if sec=5:
+            break
+
+'''
+
+
+
+import sys,math
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QTimer, QDateTime
+
+
+class CounterDemo(QWidget):
+    def __init__(self):
+        super(CounterDemo, self).__init__()
+        self.setWindowTitle('动态显示当前时间')
+        self.initUI()
+
+    def initUI(self):
+        self.label=QLabel('窗口在5秒后自动关闭')
+        self.startBtn=QPushButton('开始')
+
+        layout=QGridLayout()
+
+
+
+        layout.addWidget(self.label,0,0,1,2)
+        layout.addWidget(self.startBtn,1,0)
+
+        self.startBtn.clicked.connect(self.startTimer)
+        self.setLayout(layout)
+
+
+
+
+
+    def closeWindow(self):
+        sys.exit(app.exec_())
+
+    def startTimer(self):
+        self.timer = QTimer()
+        self.timer.singleShot(5000, app.quit)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    main = CounterDemo()
+    main.show()
+
+    sys.exit(app.exec_())
