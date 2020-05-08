@@ -10,6 +10,11 @@ def run(self)
         if sec=5:
             break
 
+QLCDNumber
+
+WordThread（QThread）
+用到自定义信号
+
 '''
 
 
