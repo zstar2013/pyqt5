@@ -22,7 +22,21 @@ WordThread（QThread）
 import sys,math
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QTimer, QDateTime
+from PyQt5.QtCore import Qt, QTimer, QDateTime, pyqtSignal,QThread
+
+sec =0
+
+class WorkThread(QThread):
+    timer=pyqtSignal()  #每隔1秒发送一次信号
+    end=pyqtSignal()    #计数器完成后发送一次信号
+    def run(self):
+        while True:
+            self.sleep(1)  #休眠1秒
+            if sec == 5:
+                self.end.emit() #发送end信号
+                break
+            self.timer.emit()   #发送timer信号
+
 
 
 class CounterDemo(QWidget):
@@ -32,40 +46,36 @@ class CounterDemo(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.label=QLabel('窗口在5秒后自动关闭')
-        self.startBtn=QPushButton('开始')
+        layout=QVBoxLayout()
+        self.lcdNumber=QLCDNumber()
+        layout.addWidget(self.lcdNumber)
 
-        layout=QGridLayout()
+        button =QPushButton('开始计数')
 
+        layout.addWidget(button)
 
+        self.workThread=WorkThread()
 
-        layout.addWidget(self.label,0,0,1,2)
-        layout.addWidget(self.startBtn,1,0)
+        self.workThread.timer.connect(self.countTime)
+        self.workThread.end.connect(self.end)
+        button.clicked.connect(self.work)
 
-        self.startBtn.clicked.connect(self.startTimer)
         self.setLayout(layout)
 
 
 
 
 
-    def closeWindow(self):
-        sys.exit(app.exec_())
+    def countTime(self):
+        global sec
+        sec +=1
+        self.lcdNumber.display(sec)
 
-    def startTimer(self):
-        self.timer = QTimer()
-        self.timer.singleShot(5000, app.quit)
+    def end(self):
+        QMessageBox.information(self,"消息","计数结束",QMessageBox.Ok)
 
-
-
-
-
-
-
-
-
-
-
+    def work(self):
+        self.workThread.start()
 
 
 
