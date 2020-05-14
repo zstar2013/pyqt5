@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QTimer, QDateTime, pyqtSignal, QThread, QUrl
 
 
-class PyqtCallJS(QMainWindow):
+class PyqtCallJS(QWidget):
     def __init__(self):
         super(PyqtCallJS, self).__init__()
         self.setWindowTitle('打开外部网页例子')
@@ -26,8 +26,21 @@ class PyqtCallJS(QMainWindow):
         self.browser=QWebEngineView()
         url=os.getcwd()+'/tt.html'
         self.browser.load(QUrl.fromLocalFile(url))
-        self.setCentralWidget(self.browser)
+        self.layout=QVBoxLayout()
+        self.setLayout(self.layout)
+        self.layout.addWidget(self.browser)
 
+        button =QPushButton('设置全名')
+        button.clicked.connect(self.complete_fullname)
+        self.layout.addWidget(button)
+
+    def complete_fullname(self):
+
+        self.value='hello world'
+        self.browser.page().runJavaScript('fullname("'+self.value+'");',self.js_callback)
+
+    def js_callback(self,result):
+        print(result)
 
 
 
