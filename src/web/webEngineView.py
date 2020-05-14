@@ -14,8 +14,8 @@ import sys,math
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QTimer, QDateTime, pyqtSignal,QThread
-
+from PyQt5.QtCore import Qt, QTimer, QDateTime, pyqtSignal, QThread, QUrl
+import os
 
 
 class WebEngineView(QMainWindow):
@@ -27,9 +27,32 @@ class WebEngineView(QMainWindow):
 
     def initUI(self):
         self.browser=QWebEngineView()
-        self.browser.load('https://www.jd.com')
-        self.setCentralWidget(self.browser)
 
+        #显示网页
+        #self.browser.load(QUrl('https://www.jd.com'))
+        #显示本地页面
+        url=os.getcwd()+'/test.html'
+        #self.browser.load(QUrl.fromLocalFile(url))
+
+        #显示嵌入web代码页面
+        self.browser.setHtml(
+        '''
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试页面</title>
+</head>
+<body>
+    <h1>Hello world PyQt5</h1>
+    <h1>Hello world PyQt5</h1>
+    <h1>Hello world PyQt5</h1>
+    <h1>Hello world PyQt5</h1>
+    <h1>Hello world PyQt5</h1>
+</body>
+</html>''')
+
+        self.setCentralWidget(self.browser)
 
 
 
