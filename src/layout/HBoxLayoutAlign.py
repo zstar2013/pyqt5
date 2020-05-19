@@ -1,28 +1,30 @@
 '''
 
-绝对布局
+设置控件的对齐方式
 '''
 
 import sys,math
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
 
-class AbsoluteLayoutAlign(QWidget):
+class HBoxLayoutAlign(QWidget):
     def __init__(self):
-        super(AbsoluteLayout,self).__init__()
-        self.setWindowTitle("绝对布局")
+        super(HBoxLayoutAlign,self).__init__()
+        self.setWindowTitle("水平布局")
 
-        self.label1=QLabel('欢迎',self)
-        self.label1.move(15,20)
-
-        self.label2 = QLabel('学习', self)
-        self.label2.move(35, 40)
-
-        self.label2 = QLabel('PyQt5', self)
-        self.label2.move(55, 80)
+        hlayout = QHBoxLayout()
+        hlayout.addWidget(QPushButton('按钮1'),2,Qt.AlignLeft|Qt.AlignTop)
+        hlayout.addWidget(QPushButton('按钮2'),4,Qt.AlignLeft|Qt.AlignTop)
+        hlayout.addWidget(QPushButton('按钮3'),1,Qt.AlignLeft|Qt.AlignTop)
+        hlayout.addWidget(QPushButton('按钮4'),1,Qt.AlignLeft|Qt.AlignBottom)
+        hlayout.addWidget(QPushButton('按钮5'),1,Qt.AlignLeft|Qt.AlignBottom)
+        hlayout.addWidget(QPushButton('按钮6'),1,Qt.AlignLeft|Qt.AlignBottom)
+        hlayout.setSpacing(40)
+        self.setLayout(hlayout)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main = AbsoluteLayout()
+    main = HBoxLayoutAlign()
     main.show()
 
     sys.exit(app.exec_())

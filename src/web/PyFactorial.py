@@ -13,10 +13,12 @@ Python+JavaScript+html+Css
 
 import sys,math,os
 from PyQt5.QtGui import *
+from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QTimer, QDateTime, pyqtSignal, QThread, QUrl
-from Factorial import *
+
+from src.web.factorial import Factorial
 
 channel =QWebChannel()
 factorial=Factorial()
@@ -35,6 +37,9 @@ class PyFactorial(QWidget):
         self.layout=QVBoxLayout()
         self.setLayout(self.layout)
         self.layout.addWidget(self.browser)
+
+        channel.registerObject('obj',factorial)
+        self.browser.page().setWebChannel(channel)
 
 
 
