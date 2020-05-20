@@ -1,36 +1,71 @@
 '''
 
-信号与槽
+为类添加多个信号
 
 '''
+from PyQt5.QtCore import *
+
 
 
 import sys,math
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 
-class SignalSlotDemo(QWidget):
+class MultSignal(QObject):
+    signal1=pyqtSignal()
+    signal2=pyqtSignal(int)
+    signal3=pyqtSignal(int,str)
+    signal4=pyqtSignal(list)
+    signal5=pyqtSignal(dict)
+
+    # 声明一个重载版本的信号,也就是槽函数可以是int和str类型，也可以是str类型
+    signal6=pyqtSignal([int,str],[str])
+
     def __init__(self):
-        super(SignalSlotDemo,self).__init__()
-        self.initUI()
+        super(MultSignal,self).__init__()
+        self.signal1.connect(self.signalCall1)
+        self.signal2.connect(self.signalCall2)
+        self.signal3.connect(self.signalCall3)
+        self.signal4.connect(self.signalCall4)
+        self.signal5.connect(self.signalCall5)
+
+        self.signal6[str].connect(self.signalCall6OverLoad)
+        self.signal6[int,str].connect(self.signalCall6)
+
+        self.signal1.emit()
+        self.signal2.emit(10)
+        self.signal3.emit(1,"hello world")
+        self.signal4.emit([1,2,3,4,5,6])
+        self.signal5.emit({"name":"bill","age":30})
+        self.signal6[str].emit("test")
+        self.signal6[int,str].emit(100,"mytest")
 
 
-    def onClick(self):
-        self.btn.setText("信号已经发出")
-        self.btn.setStyleSheet("QPushButton(max-width:200px;min-width:200px)")
+    def signalCall1(self):
+        print("signal1 emit")
 
-    def initUI(self):
-        self.setGeometry(300,300,500,400)
-        self.setWindowTitle("信号与槽")
-        self.btn = QPushButton("我的按钮",self)
-        self.btn.clicked.connect(self.onClick)
+    def signalCall2(self,val):
+        print("signal2 emit,value",val)
+
+    def signalCall3(self,val,text):
+        print("signal3 emit,value",val,text)
+
+    def signalCall4(self,val):
+        print("signal4 emit,value",val)
+
+    def signalCall5(self,val):
+        print("signal5 emit,value",val)
+
+    def signalCall6(self,val,text):
+        print("signal6 emit,value",val,text)
+    def signalCall6OverLoad(self,val):
+        print("signal6 OverLoad emit,value",val)
+
+
 
 
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    main = SignalSlotDemo()
-    main.show()
+    multSignal=MultSignal()
 
-    sys.exit(app.exec_())

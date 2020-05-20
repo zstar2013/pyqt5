@@ -1,35 +1,37 @@
 '''
 
-表单布局
+拖动控件之间的边界
 '''
 
 import sys,math
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
 
-class FormForm(QWidget):
+class Splitter(QWidget):
     def __init__(self):
-        super(FormForm,self).__init__()
+        super(Splitter,self).__init__()
+        hbox = QHBoxLayout(self)
         self.setWindowTitle("表单布局")
+        self.setGeometry(300,300,300,200)
+        topleft=QFrame()
+        topleft.setFrameShape(QFrame.StyledPanel)
 
-        titleLabel =QLabel("标题")
-        authorLabel =QLabel("作者")
-        contentLabel =QLabel("内容")
+        bottom =QFrame()
+        bottom.setFrameShape(QFrame.StyledPanel)
 
-        titleEdit=QLineEdit()
-        authorEdit=QLineEdit()
-        contentEdit=QTextEdit()
+        splitter1=QSplitter()
+        textEdit=QTextEdit()
+        splitter1.addWidget(topleft)
+        splitter1.addWidget(textEdit)
+        splitter1.setSizes([200,100])
 
-
-        formlayout =QFormLayout()
-        formlayout.addRow(titleLabel,titleEdit)
-        formlayout.addRow(authorLabel,authorEdit)
-        formlayout.addRow(contentLabel,contentEdit)
-
+        splitter2=QSplitter(Qt.Vertical)
+        splitter2.addWidget(splitter1)
+        splitter2.addWidget(bottom)
 
 
-        self.setLayout(formlayout)
-        self.resize(350,300)
-
+        hbox.addWidget(splitter2)
+        self.setLayout(hbox)
 
 
 
@@ -37,7 +39,7 @@ class FormForm(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main = FormForm()
+    main = Splitter()
     main.show()
 
     sys.exit(app.exec_())

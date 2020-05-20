@@ -1,15 +1,15 @@
 '''
 
-栅格布局:表单设计
+表单布局
 '''
 
 import sys,math
 from PyQt5.QtWidgets import *
 
-class GridForm(QWidget):
+class FormForm(QWidget):
     def __init__(self):
-        super(GridForm,self).__init__()
-        self.setWindowTitle("栅格布局:表单设计")
+        super(FormForm,self).__init__()
+        self.setWindowTitle("表单布局")
 
         titleLabel =QLabel("标题")
         authorLabel =QLabel("作者")
@@ -20,19 +20,14 @@ class GridForm(QWidget):
         contentEdit=QTextEdit()
 
 
-        grid =QGridLayout()
-        grid.setSpacing(10)
+        formlayout =QFormLayout()
+        formlayout.addRow(titleLabel,titleEdit)
+        formlayout.addRow(authorLabel,authorEdit)
+        formlayout.addRow(contentLabel,contentEdit)
 
-        grid.addWidget(titleLabel,1,0)
-        grid.addWidget(titleEdit,1,1)
 
-        grid.addWidget(authorLabel, 2, 0)
-        grid.addWidget(authorEdit, 2, 1)
 
-        grid.addWidget(contentLabel, 3, 0)
-        grid.addWidget(contentEdit, 3, 1,5,1)
-
-        self.setLayout(grid)
+        self.setLayout(formlayout)
         self.resize(350,300)
 
 
@@ -42,7 +37,7 @@ class GridForm(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main = GridForm()
+    main = FormForm()
     main.show()
 
     sys.exit(app.exec_())
