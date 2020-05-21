@@ -1,6 +1,6 @@
 '''
 
-多窗口交互（1）：不使用信号与槽
+多窗口交互（1）：使用信号与槽
 
 win1
 
@@ -18,29 +18,35 @@ from DateDialog import DateDialog
 class MultWindow2(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("多窗口交互（1）：不使用信号与槽")
+        self.setWindowTitle("多窗口交互（2）：使用信号与槽")
 
-        self.lineEdit=QLineEdit(self)
-        self.button1=QPushButton('弹出对话框1')
-        self.button1.clicked.connect(self.onButton1Click)
+        self.open_btn=QPushButton('获取时间')
+        self.lineEdit_inner=QLineEdit(self)
+        self.lineEdit_emit=QLineEdit(self)
+        self.open_btn.clicked.connect(self.openDialog)
 
-        self.button2 = QPushButton('弹出对话框2')
-        self.button2.clicked.connect(self.onButton2Click)
+        self.lineEdit_inner.setText("接收子窗口内置信号的时间")
+        self.lineEdit_emit.setText("接收子窗口自定义信号的时间")
 
         gridLayout=QGridLayout()
-        gridLayout.addWidget(self.lineEdit)
-        gridLayout.addWidget(self.button1)
-        gridLayout.addWidget(self.button2)
+        gridLayout.addWidget(self.lineEdit_inner)
+        gridLayout.addWidget(self.lineEdit_emit)
+
+        gridLayout.addWidget(self.open_btn)
 
         self.setLayout(gridLayout)
 
 
-    def onButton1Click(self):
-        dialog=DateDialog(self)
-        result=dialog.exec()
-        date=dialog.dateTime()
-        self.lineEdit.setText(date.date().toString())
-        dialog.destroy()
+    def openDialog(self):
+        dialog=NewDateDialog(self)
+        #连接子窗口的内置信号与主窗口的槽函数
+        dialog.datetime_inner.dateTimeChanged.connect(self.deal_inner_slot)
+        #连接子窗口的自定义信号与主窗口的槽函数
+        dialog.Signal_OneParameter.connect(self.deal_emit_slot)
+        dialog.show()
+
+    def deal_inner_slot(self,date):
+        self.lineEdit_inner.setText(date.toString())
 
     def onButton2Click(self):
         date,time,result=DateDialog.getDateTime()
