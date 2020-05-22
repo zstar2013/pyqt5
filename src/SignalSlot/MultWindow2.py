@@ -13,11 +13,12 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from DateDialog import DateDialog
+from NewDateDialog import NewDateDialog
 
 class MultWindow2(QWidget):
     def __init__(self):
         super().__init__()
+        self.resize(400,90)
         self.setWindowTitle("多窗口交互（2）：使用信号与槽")
 
         self.open_btn=QPushButton('获取时间')
@@ -48,13 +49,8 @@ class MultWindow2(QWidget):
     def deal_inner_slot(self,date):
         self.lineEdit_inner.setText(date.toString())
 
-    def onButton2Click(self):
-        date,time,result=DateDialog.getDateTime()
-        self.lineEdit.setText(date.toString())
-        if result==QDialog.Accepted:
-            print("点击确认按钮")
-        else:
-            print("点击取消按钮")
+    def deal_emit_slot(self,dateStr):
+        self.lineEdit_emit.setText(dateStr)
 
 
 if __name__ == '__main__':

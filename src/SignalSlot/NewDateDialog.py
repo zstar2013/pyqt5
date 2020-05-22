@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 class NewDateDialog(QDialog):
     Signal_OneParameter=pyqtSignal(str)
     def __init__(self,parent=None):
-        super(NewDateDialog,self).__init__()
+        super(NewDateDialog,self).__init__(parent)
         self.setWindowTitle("子窗口，用来发射信号")
 
         layout = QVBoxLayout(self)
@@ -23,12 +23,17 @@ class NewDateDialog(QDialog):
         layout.addWidget(self.datetime_inner)
         layout.addWidget(self.datetime_emit)
 
-    def dateTime(self):
-        return self.datetime.dateTime()
+        #使用两个button(ok和cancel)分别连接accept和reject()槽函数
+        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, Qt.Horizontal, self)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
 
-    @staticmethod
-    def getDateTime(parent=None):
-        dialog=NewDateDialog()
-        result=dialog.exec()
-        date=dialog.dateTime()
-        return (date.date(),date.time(),result== QDialog.Accepted)
+        layout.addWidget(buttons)
+
+        self.datetime_emit.dateTimeChanged.connect(self.emit_signal)
+
+    def emit_signal(self):
+        date_str=self.datetime_emit.dateTime().toString()
+        self.Signal_OneParameter.emit(date_str)
+
+
