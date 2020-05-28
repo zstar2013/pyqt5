@@ -22,6 +22,7 @@ class ScaleImage(QWidget):
         label1.setFixedWidth(200)
         label1.setFixedHeight(200)
 
+
         result = img.scaled(label1.width(),label1.height(),Qt.IgnoreAspectRatio,Qt.SmoothTransformation)
         label1.setPixmap(QPixmap.fromImage(result))
 
@@ -33,6 +34,7 @@ class ScaleImage(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     win = ScaleImage()
+    win.setWindowOpacity(0.6)
     win.show()
     sys.exit(app.exec_())
 

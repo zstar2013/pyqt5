@@ -5,6 +5,7 @@
 '''
 
 from PyQt5.Qt import *
+from PyQt5.QtWidgets import *
 import sys
 
 if __name__ == "__main__":
@@ -12,7 +13,7 @@ if __name__ == "__main__":
     win = QMainWindow()
     win.setWindowTitle('窗口的透明度设置')
     # 0到1，1表示不透明，0表示完全透明
-    win.setWindowOpacity(0.6)
+    win.setWindowOpacity(0.9)
 
     button = QPushButton('我的按钮',win)
 
